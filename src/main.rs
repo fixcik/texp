@@ -25,7 +25,7 @@ fn main() -> anyhow::Result<()> {
     let mut context = tera::Context::new();
 
     let values: Mapping = if let Some(path) = cli.values {
-        let reader = File::open(path)?;
+        let reader = File::open(path).context("Failed to read file with values")?;
         serde_yaml::from_reader(reader)?
     } else {
         Default::default()
@@ -39,7 +39,8 @@ fn main() -> anyhow::Result<()> {
         );
     }
 
-    tera.add_template_file(cli.path, Some("template"))?;
+    tera.add_template_file(cli.path, Some("template"))
+        .context("Failed to read template file")?;
 
     if let Some(path) = cli.output {
         let file = std::fs::File::create(path).context("Failed to create file")?;
