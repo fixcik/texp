@@ -1,0 +1,21 @@
+[package]
+name = "texp"
+version = "0.1.0"
+edition = "2021"
+
+license = "GPL-3.0"
+authors = ["fixcix"]
+keywords = ["cli", "tera", "templates", "tools"]
+categories = ["templates", "command-line-utilities", "development-tools"]
+description = "texp is a small tool for render templates"
+readme = "README.md"
+repository = "https://github.com/fixcik/texp"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.82"
+cla = "0.0.1"
+clap = { version = "4.5.4", features = ["derive"] }
+serde_yaml = "0.9.34"
+tera = { version = "1.19.1", features = ["preserve_order"] }
