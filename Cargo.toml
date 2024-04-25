@@ -1,12 +1,12 @@
 [package]
 name = "texp"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 license = "GPL-3.0"
 authors = ["fixcix"]
 keywords = ["cli", "tera", "templates", "tools"]
-categories = ["templates", "command-line-utilities", "development-tools"]
+categories = ["template-engine", "command-line-utilities", "development-tools"]
 description = "texp is a small tool for render templates"
 readme = "README.md"
 repository = "https://github.com/fixcik/texp"
