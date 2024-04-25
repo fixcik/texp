@@ -1,16 +1,13 @@
-# texp
 
 `texp` is a compact tool designed for rendering templates in a syntax reminiscent of Jinja, powered by [Tera](https://github.com/Keats/). It's useful for generating text output based on predefined templates and variable files.
 
 Learn more about template syntax on the [Tera Documentation](https://keats.github.io/tera/docs/).
 
-## Table of Contents
+Table of Contents:
 
-- [texp](#texp)
-  - [Table of Contents](#table-of-contents)
-  - [Examples](#examples)
-  - [Installation](#installation)
-    - [Via cargo](#via-cargo)
+- [Examples](#examples)
+- [Installation](#installation)
+  - [Via cargo](#via-cargo)
 
 ## Examples
 
