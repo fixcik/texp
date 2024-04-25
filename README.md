@@ -8,6 +8,8 @@ Table of Contents:
 - [Examples](#examples)
 - [Installation](#installation)
   - [Via cargo](#via-cargo)
+- [Custom functions](#custom-functions)
+  - [randomString](#randomstring)
 
 ## Examples
 
@@ -43,4 +45,14 @@ texp -v variables.yaml -o doc.html doc.template.html
 
 ```bash
 cargo install texp
+```
+
+
+## Custom functions
+
+### randomString
+
+Generates random string, with given length:
+```
+{{ randomString(length=20) }}
 ```

@@ -898,11 +898,12 @@ dependencies = [
 
 [[package]]
 name = "texp"
-version = "0.1.2"
+version = "0.2.0"
 dependencies = [
  "anyhow",
  "cla",
  "clap",
+ "rand",
  "serde_yaml",
  "tera",
 ]
