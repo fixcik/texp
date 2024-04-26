@@ -3,6 +3,20 @@
 
 Learn more about template syntax on the [Tera Documentation](https://keats.github.io/tera/docs/).
 
+```
+sage: texp [OPTIONS] <path>
+
+Arguments:
+  <path>  
+
+Options:
+  -v, --values <VALUES>  Path to yaml file with values
+      --set <SET>        Set value, e.g "--set foo.a=bar --set foo.b=baz"
+  -o, --output <OUTPUT>  Path to output file
+  -h, --help             Print help
+  -V, --version          Print version
+```
+
 Table of Contents:
 
 - [Examples](#examples)
