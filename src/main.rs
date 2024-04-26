@@ -32,8 +32,6 @@ fn main() -> anyhow::Result<()> {
     let mut tera = tera::Tera::default();
     let mut context = tera::Context::new();
 
-    println!("{:?}", cli);
-
     tera.register_function(
         "randomString",
         Box::new(|args: &HashMap<String, tera::Value>| {
@@ -85,8 +83,6 @@ fn main() -> anyhow::Result<()> {
             }
         }
     }
-
-    println!("{:?}", values);
 
     for (key, value) in &values {
         context.insert(
