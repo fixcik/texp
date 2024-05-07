@@ -2,7 +2,10 @@ use std::{collections::HashMap, fs::File, path::PathBuf};
 
 use anyhow::{anyhow, Context};
 use clap::Parser;
-use rand::{distributions::Alphanumeric, thread_rng, Rng};
+use rand::{
+    distributions::{Alphanumeric, Slice},
+    thread_rng, Rng,
+};
 use serde_yaml::{to_value, Mapping, Value};
 
 #[derive(Parser, Debug)]
@@ -40,12 +43,21 @@ fn main() -> anyhow::Result<()> {
                 Some(value) => value.as_number().unwrap().as_u64().unwrap(),
                 None => return Err(tera::Error::msg("No length provided")),
             };
-            let hex_string: String = rng
-                .sample_iter(&Alphanumeric)
-                .take(length as usize)
-                .map(char::from)
-                .collect();
-            tera::Result::Ok(tera::to_value(hex_string)?)
+            let string: String = match args.get("chars") {
+                Some(value) => {
+                    let vowels = value.as_str().unwrap().chars().collect::<Vec<_>>();
+                    let vowels_dist = Slice::new(&vowels).unwrap();
+                    rng.sample_iter(&vowels_dist)
+                        .take(length as usize)
+                        .collect()
+                }
+                None => rng
+                    .sample_iter(&Alphanumeric)
+                    .take(length as usize)
+                    .map(char::from)
+                    .collect(),
+            };
+            tera::Result::Ok(tera::to_value(string)?)
         }),
     );
 
