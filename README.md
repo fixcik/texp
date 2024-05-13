@@ -25,6 +25,7 @@ Table of Contents:
   - [Via homebrew](#via-homebrew)
 - [Custom functions](#custom-functions)
   - [randomString](#randomstring)
+  - [jwtToken](#jwttoken)
 
 ## Examples
 
@@ -87,4 +88,12 @@ Generates random string, with given length:
 
 ```
 {{ randomString(length=20) }}
+```
+
+### jwtToken
+
+Generate jwt token
+
+```
+{{ jwtToken(claims=claims, secret=secret) }}
 ```

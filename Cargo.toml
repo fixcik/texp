@@ -1,6 +1,6 @@
 [package]
 name = "texp"
-version = "0.2.3"
+version = "0.2.4"
 edition = "2021"
 
 license = "GPL-3.0"
@@ -17,6 +17,13 @@ repository = "https://github.com/fixcik/texp"
 anyhow = "1.0.82"
 cla = "0.0.1"
 clap = { version = "4.5.4", features = ["derive"] }
+hmac = { version = "0.12.1", optional = true }
+jwt = { version = "0.16.0", optional = true }
 rand = "0.8.5"
 serde_yaml = "0.9.34"
+sha2 = { version = "0.10.8", optional = true }
 tera = { version = "1.19.1", features = ["preserve_order"] }
+
+[features]
+default = ["jwt"]
+jwt = ["dep:jwt", "dep:hmac", "dep:sha2"]

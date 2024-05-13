@@ -2,11 +2,19 @@ use std::{collections::HashMap, fs::File, path::PathBuf};
 
 use anyhow::{anyhow, Context};
 use clap::Parser;
+use hmac::Mac;
 use rand::{
     distributions::{Alphanumeric, Slice},
     thread_rng, Rng,
 };
 use serde_yaml::{to_value, Mapping, Value};
+
+#[cfg(feature = "jwt")]
+use hmac::Hmac;
+#[cfg(feature = "jwt")]
+use jwt::SignWithKey;
+#[cfg(feature = "jwt")]
+use sha2::Sha256;
 
 #[derive(Parser, Debug)]
 #[command(name = "texp")]
@@ -60,6 +68,39 @@ fn main() -> anyhow::Result<()> {
             tera::Result::Ok(tera::to_value(string)?)
         }),
     );
+
+    if cfg!(feature = "jwt") {
+        tera.register_function(
+            "jwtToken",
+            Box::new(|args: &HashMap<String, tera::Value>| {
+                let claims = {
+                    let claims = args
+                        .get("claims")
+                        .ok_or(tera::Error::msg("No claims provided"))?;
+
+                    let claims = claims
+                        .as_object()
+                        .ok_or(tera::Error::msg("Claims should be an object"))?;
+
+                    claims
+                };
+
+                let secret = args
+                    .get("secret")
+                    .ok_or(tera::Error::msg("No secret provided"))?
+                    .as_str()
+                    .ok_or(tera::Error::msg("Secret should be a string"))?;
+
+                let key: Hmac<Sha256> = Hmac::new_from_slice(secret.as_bytes()).unwrap();
+
+                let token = claims
+                    .sign_with_key(&key)
+                    .map_err(|e| tera::Error::msg(e))?;
+
+                tera::Result::Ok(tera::to_value(token)?)
+            }),
+        );
+    }
 
     let mut values: Mapping = if let Some(path) = cli.values {
         let reader = File::open(path).context("Failed to read file with values")?;
