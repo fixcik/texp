@@ -16,6 +16,9 @@ use jwt::SignWithKey;
 #[cfg(feature = "jwt")]
 use sha2::Sha256;
 
+#[cfg(feature = "base64")]
+use base64::{engine::general_purpose::STANDARD, Engine as _};
+
 #[derive(Parser, Debug)]
 #[command(name = "texp")]
 #[command(bin_name = "texp")]
@@ -68,6 +71,16 @@ fn main() -> anyhow::Result<()> {
             tera::Result::Ok(tera::to_value(string)?)
         }),
     );
+
+    if cfg!(feature = "base64") {
+        tera.register_filter(
+            "base64",
+            |value: &tera::Value, _: &HashMap<String, tera::Value>| -> tera::Result<tera::Value> {
+                let value = value.as_str().unwrap().as_bytes();
+                tera::Result::Ok(tera::to_value(STANDARD.encode(value))?)
+            },
+        );
+    }
 
     if cfg!(feature = "jwt") {
         tera.register_function(

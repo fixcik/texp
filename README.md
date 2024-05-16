@@ -26,6 +26,8 @@ Table of Contents:
 - [Custom functions](#custom-functions)
   - [randomString](#randomstring)
   - [jwtToken](#jwttoken)
+- [Custom filters](#custom-filters)
+  - [base64](#base64)
 
 ## Examples
 
@@ -96,4 +98,18 @@ Generate jwt token
 
 ```
 {{ jwtToken(claims=claims, secret=secret) }}
+```
+
+## Custom filters
+
+### base64
+
+```
+{{ "text" | base64 }}
+```
+
+renders:
+
+```
+dGV4dA==
 ```
